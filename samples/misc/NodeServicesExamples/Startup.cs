@@ -2,9 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.NodeServices;
+using Microsoft.AspNetCore.NodeServices.HostingModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NodeServicesExamples
 {
@@ -30,11 +36,14 @@ namespace NodeServicesExamples
             app.UseDeveloperExceptionPage();
 
             // Dynamically transpile any .js files under the '/js/' directory
-            app.Use(next => async context => {
+            app.Use(next => async context =>
+            {
                 var requestPath = context.Request.Path.Value;
-                if (requestPath.StartsWith("/js/") && requestPath.EndsWith(".js")) {
+                if (requestPath.StartsWith("/js/") && requestPath.EndsWith(".js"))
+                {
                     var fileInfo = env.WebRootFileProvider.GetFileInfo(requestPath);
-                    if (fileInfo.Exists) {
+                    if (fileInfo.Exists)
+                    {
                         var transpiled = await nodeServices.InvokeAsync<string>("./Node/transpilation.js", fileInfo.PhysicalPath, requestPath);
                         await context.Response.WriteAsync(transpiled);
                         return;
@@ -56,6 +65,8 @@ namespace NodeServicesExamples
 
         public static void Main(string[] args)
         {
+            UnicodeTest().Wait();
+
             var host = new WebHostBuilder()
                 .ConfigureLogging(factory =>
                 {
@@ -69,6 +80,28 @@ namespace NodeServicesExamples
                 .Build();
 
             host.Run();
+        }
+
+        public static async Task UnicodeTest()
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                TypeNameHandling = TypeNameHandling.None
+            };
+
+            var client = new HttpClient();
+
+            NodeInvocationInfo invocationInfo = new NodeInvocationInfo()
+            {
+                ModuleName = "main",
+                ExportedFunctionName = "run",
+                Args = new[] { "Super Écran" },
+            };
+
+            var payloadJson = JsonConvert.SerializeObject(invocationInfo, jsonSerializerSettings);
+            var payload = new StringContent(payloadJson, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("http://localhost:8080", payload);
         }
     }
 }
