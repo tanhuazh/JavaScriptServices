@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -63,6 +64,7 @@ namespace Microsoft.AspNetCore.NodeServices.HostingModels
         {
             var payloadJson = JsonConvert.SerializeObject(invocationInfo, jsonSerializerSettings);
             var payload = new StringContent(payloadJson, Encoding.UTF8, "application/json");
+            Debug.WriteLine("Posting to node instance server: " + payloadJson);
             var response = await _client.PostAsync(_endpoint, payload, cancellationToken);
 
             if (!response.IsSuccessStatusCode)

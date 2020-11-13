@@ -18,7 +18,7 @@ namespace NodeServicesExamples.Controllers
 
         public async Task<IActionResult> Index(int pageIndex)
         {
-            var result = await _nodeServices.InvokeExportAsync<string>("./main", "run", "michael");
+            var result = await _nodeServices.InvokeExportAsync<string>("./main", "run", "Super Écran");
             Debug.WriteLine(result);
             return View();
         }
