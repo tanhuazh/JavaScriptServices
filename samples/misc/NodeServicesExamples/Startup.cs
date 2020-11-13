@@ -69,19 +69,19 @@ namespace NodeServicesExamples
 
             return;
 
-            var host = new WebHostBuilder()
-                .ConfigureLogging(factory =>
-                {
-                    factory.AddConsole();
-                    factory.AddDebug();
-                })
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseKestrel()
-                .UseStartup<Startup>()
-                .Build();
+            //var host = new WebHostBuilder()
+            //    .ConfigureLogging(factory =>
+            //    {
+            //        factory.AddConsole();
+            //        factory.AddDebug();
+            //    })
+            //    .UseContentRoot(Directory.GetCurrentDirectory())
+            //    .UseIISIntegration()
+            //    .UseKestrel()
+            //    .UseStartup<Startup>()
+            //    .Build();
 
-            host.Run();
+            //host.Run();
         }
 
         public static async Task UnicodeTest()
