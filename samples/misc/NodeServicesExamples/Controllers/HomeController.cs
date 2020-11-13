@@ -7,8 +7,16 @@ namespace NodeServicesExamples.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(int pageIndex)
+        private INodeServices _nodeServices;
+
+        public HomeController(INodeServices nodeServices)
         {
+            _nodeServices = nodeServices;
+        }
+
+        public async Task<IActionResult> Index(int pageIndex)
+        {
+            var result = await _nodeServices.InvokeExportAsync<string>("./main", "run", "");
             return View();
         }
 
