@@ -18,7 +18,8 @@ namespace NodeServicesExamples
             // Enable Node Services
             services.AddNodeServices(options =>
             {
-                options.ProjectPath = @"c:\temp";
+                // this is relative to NodeServicesExamples folder
+                options.ProjectPath = @"./test";
             });
             services.AddSpaPrerenderer();
         }

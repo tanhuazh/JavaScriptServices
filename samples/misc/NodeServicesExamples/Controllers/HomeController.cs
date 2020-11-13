@@ -1,3 +1,5 @@
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.NodeServices;
@@ -16,7 +18,8 @@ namespace NodeServicesExamples.Controllers
 
         public async Task<IActionResult> Index(int pageIndex)
         {
-            var result = await _nodeServices.InvokeExportAsync<string>("./main", "run", "");
+            var result = await _nodeServices.InvokeExportAsync<string>("./main", "run", "michael");
+            Debug.WriteLine(result);
             return View();
         }
 
