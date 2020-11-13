@@ -84,6 +84,7 @@ server.listen(requestedPortOrZero, 'localhost', function () {
 exitWhenParentExits(parseInt(parsedArgs.parentPid), /* ignoreSigint */ true);
 
 function readRequestBodyAsJson(request, callback) {
+    debugger;
     let requestBodyAsString = '';
     request.on('data', chunk => { requestBodyAsString += chunk; });
     request.on('end', () => { callback(JSON.parse(requestBodyAsString)); });
