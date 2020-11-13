@@ -16,7 +16,10 @@ namespace NodeServicesExamples
             services.AddMvc();
 
             // Enable Node Services
-            services.AddNodeServices();
+            services.AddNodeServices(options =>
+            {
+                options.ProjectPath = @"c:\temp";
+            });
             services.AddSpaPrerenderer();
         }
 

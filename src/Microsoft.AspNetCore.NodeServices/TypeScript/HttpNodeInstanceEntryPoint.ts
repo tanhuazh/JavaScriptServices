@@ -13,6 +13,7 @@ import { AddressInfo } from 'net';
 const dynamicRequire: (name: string) => any = eval('require');
 
 const server = http.createServer((req, res) => {
+    debugger;
     readRequestBodyAsJson(req, bodyJson => {
         let hasSentResult = false;
         const callback = (errorValue, successValue) => {
