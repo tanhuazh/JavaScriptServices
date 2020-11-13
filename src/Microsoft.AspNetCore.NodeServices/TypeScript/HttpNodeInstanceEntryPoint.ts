@@ -87,7 +87,10 @@ function readRequestBodyAsJson(request, callback) {
     debugger;
     let requestBodyAsString = '';
     request.on('data', chunk => { requestBodyAsString += chunk; });
-    request.on('end', () => { callback(JSON.parse(requestBodyAsString)); });
+    request.on('end', () => {
+        console.log('received payload: ' + requestBodyAsString);
+        callback(JSON.parse(requestBodyAsString));
+    });
 }
 
 function respondWithError(res: http.ServerResponse, errorValue: any) {

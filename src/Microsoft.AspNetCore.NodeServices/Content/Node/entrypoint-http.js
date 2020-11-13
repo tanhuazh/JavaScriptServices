@@ -184,7 +184,10 @@ function readRequestBodyAsJson(request, callback) {
     debugger;
     var requestBodyAsString = '';
     request.on('data', function (chunk) { requestBodyAsString += chunk; });
-    request.on('end', function () { callback(JSON.parse(requestBodyAsString)); });
+    request.on('end', function () {
+        console.log('received payload: ' + requestBodyAsString);
+        callback(JSON.parse(requestBodyAsString));
+    });
 }
 function respondWithError(res, errorValue) {
     res.statusCode = 500;

@@ -67,6 +67,8 @@ namespace NodeServicesExamples
         {
             UnicodeTest().Wait();
 
+            return;
+
             var host = new WebHostBuilder()
                 .ConfigureLogging(factory =>
                 {
@@ -101,7 +103,7 @@ namespace NodeServicesExamples
 
             var payloadJson = JsonConvert.SerializeObject(invocationInfo, jsonSerializerSettings);
             var payload = new StringContent(payloadJson, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("http://localhost:8080", payload);
+            var response = await client.PostAsync("http://localhost:60744", payload);
         }
     }
 }

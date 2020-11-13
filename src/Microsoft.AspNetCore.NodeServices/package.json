@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "start": "node ./content/node/entrypoint-http.js"
+    "start": "node ./content/node/entrypoint-http.js -- --port 60744"
   },
   "author": "Microsoft",
   "license": "Apache-2.0",
