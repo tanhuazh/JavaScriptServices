@@ -156,6 +156,7 @@ var server = http.createServer(function (req, res) {
                 return res;
             }
         });
+        console.log('invoke with args: ' + bodyJson.args);
         try {
             var resolvedPath = path.resolve(process.cwd(), bodyJson.moduleName);
             var invokedModule = dynamicRequire(resolvedPath);
